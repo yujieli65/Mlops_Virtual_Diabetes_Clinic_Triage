@@ -4,12 +4,10 @@ import os
 import joblib
 import numpy as np
 
-# 默认路径，可通过环境变量覆盖
 MODEL_PATH = os.environ.get("MODEL_PATH", "artifacts/model.joblib")
 
 app = FastAPI(title="Virtual Diabetes Clinic - Triage API")
 
-# 尝试在启动时加载模型
 pipeline = None
 meta = None
 try:
@@ -44,20 +42,25 @@ def health():
     """Return model health and version."""
     if pipeline is None:
         return {"status": "error", "model_version": None}
-    return {"status": "ok", "model_version": model_version}
+    return {
+        "status": "ok",
+        "model_version": model_version,
+    }
 
 
 @app.post("/predict")
 def predict(payload: DiabetesPayload):
-    """Accepts JSON with the 10 diabetes features and returns a numeric prediction."""
+    """Accepts JSON with 10 diabetes features and returns a numeric prediction."""
     if pipeline is None:
         raise HTTPException(status_code=500, detail="model not loaded")
     try:
-        data = np.array([[
-            payload.age, payload.sex, payload.bmi, payload.bp,
-            payload.s1, payload.s2, payload.s3, payload.s4,
-            payload.s5, payload.s6
-        ]])
+        data = np.array([
+            [
+                payload.age, payload.sex, payload.bmi, payload.bp,
+                payload.s1, payload.s2, payload.s3, payload.s4,
+                payload.s5, payload.s6
+            ]
+        ])
         pred = pipeline.predict(data)[0]
         return {"prediction": float(pred)}
     except Exception as e:
