@@ -22,7 +22,7 @@ jobs:
       - name: Lint
         run: flake8 src tests
       - name: Run tests
-        run: pytest -q
+        run: PYTHONPATH=$PWD pytest -q
       - name: Train smoke (fast)
         run: |
           mkdir -p artifacts

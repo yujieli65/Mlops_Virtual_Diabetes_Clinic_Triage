@@ -18,3 +18,4 @@ pytest
 
 # Code style / linting
 flake8
+httpx
