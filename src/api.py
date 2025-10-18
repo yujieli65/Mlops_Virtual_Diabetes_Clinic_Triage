@@ -55,15 +55,15 @@ def predict(payload: DiabetesPayload):
     try:
         data = np.array([
             [
-                payload.age, 
-                payload.sex, 
-                payload.bmi, 
+                payload.age,
+                payload.sex,
+                payload.bmi,
                 payload.bp,
-                payload.s1, 
-                payload.s2, 
-                payload.s3, 
+                payload.s1,
+                payload.s2,
+                payload.s3,
                 payload.s4,
-                payload.s5, 
+                payload.s5,
                 payload.s6
             ]
         ])
