@@ -40,6 +40,7 @@ jobs:
         run: |
           IMAGE_TAG=ghcr.io/${{ github.repository_owner }}/mlops_virtual_diabetes_clinic:${GITHUB_REF#refs/tags/}
           docker build -t $IMAGE_TAG .
+          docker push $IMAGE_TAG
 
       # 6️⃣ Push Docker 镜像
       - name: Push Docker image
